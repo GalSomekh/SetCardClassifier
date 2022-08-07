@@ -1,4 +1,5 @@
 import os
+import glob
 from datetime import datetime
 import cv2
 import numpy as np
@@ -207,4 +208,15 @@ def save_image(image, path=None):
         file_name = datetime.now().strftime("%Y-%m-%d %H_%M_%S.%fff") + '.png'
         path = os.path.join(const.IMAGE_LOGS_FOLDER_PATH, file_name)
     cv2.imwrite(path, image)
+
+
+def clear_image_logs():
+    """
+    Clears all image logs
+    Sometimes opencv doesn't save images properly and it might have issues with loading them later
+    """
+    image_folder = const.IMAGE_LOGS_FOLDER_PATH
+    all_pngs = glob.iglob(os.path.join(image_folder, '*.png'))
+    for f in all_pngs:
+        os.remove(f)
 
