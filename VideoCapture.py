@@ -1,3 +1,5 @@
+from typing import Callable, \
+                   Union
 import cv2
 import time
 import threading
@@ -11,11 +13,11 @@ class VideoCapture:
     taken from https://stackoverflow.com/questions/43665208/how-to-get-the-latest-frame-from-capture-device-camera-in-opencv
     """
 
-    def __init__(self, name, kill, cap_settings=None):
+    def __init__(self, name: Union[str, int], kill: Callable[[], bool], cap_settings: dict = None):
         """
         Open the video device and set the given settings
 
-        :param name: name of the video device
+        :param name: name of the video device. str for video file path, int for webcam device id
         :param kill: function that returns True if the thread should be killed
         :param cap_settings: settings for the video capture, dict - setting: value
         """
@@ -28,11 +30,11 @@ class VideoCapture:
         t = threading.Thread(target=self._reader)
         t.start()
 
-    def _open_cap_with_retries(self, name, retries: int = 3):
+    def _open_cap_with_retries(self, name: Union[str, int], retries: int = 3):
         """
         Open the video capture with retries
 
-        :param name: name of the video device
+        :param name: name of the video device. str for video file path, int for webcam device id
         :param retries: number of retries
         :return: cv2.VideoCapture object
         """
