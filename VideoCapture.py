@@ -1,3 +1,4 @@
+import logging
 from typing import Callable, \
                    Union
 import cv2
@@ -43,8 +44,7 @@ class VideoCapture:
             if cap.isOpened():
                 return cap
             else:
-                # TODO: Logger
-                # LOGGER.warning("Could not open camera by index, retrying")
+                logging.warning("Could not open camera by index, retrying")
                 time.sleep(1)
 
         raise Exception("Could not open camera")
