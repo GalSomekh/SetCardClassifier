@@ -33,16 +33,16 @@ class ShapeLabeler:
         """
         extreme_points = helpers.get_contour_extreme_points(self.cnt)
         horz_diag = [extreme_points[0], extreme_points[2]]
-        up_diag = [extreme_points[1], extreme_points[3]]
-        angle = helpers.get_lines_angle(up_diag, horz_diag)
+        vert_diag = [extreme_points[1], extreme_points[3]]
+        angle = helpers.get_lines_angle(vert_diag, horz_diag)
         # Checks angle between the two diagonals
         if abs(90 - angle) > const.DIAMOND_ANGLE_THRESHOLD:
             return False
-        area = helpers.point_distance(*horz_diag) * helpers.point_distance(*up_diag) * 0.5
+        area = helpers.point_distance(*horz_diag) * helpers.point_distance(*vert_diag) * 0.5
         # Checks area difference between geometric area and contour area
         if abs(1 - (area / self.cnt_area)) > const.DIAMOND_AREA_DIFF_THRESHOLD:
             return False
-        int_point = helpers.get_line_intersection(horz_diag, up_diag)
+        int_point = helpers.get_line_intersection(horz_diag, vert_diag)
         # Checks if the intersection point is close to the center of the contour
         if helpers.point_distance(int_point, self.cnt_center) > const.DIAMOND_CENTER_DIFF_THRESHOLD:
             return False
